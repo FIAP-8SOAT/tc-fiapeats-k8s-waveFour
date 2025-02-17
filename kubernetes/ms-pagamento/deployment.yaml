@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-pagamento-deployment
+  namespace: fiapeats-hk
+  labels:
+    app: ms-pagamento
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-pagamento
+  template:
+    metadata:
+      labels:
+        app: ms-pagamento
+    spec:
+      containers:
+        - name: ms-pagamento-container
+          image: dilanclima/ms-pagamento:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: FEIGN_MERCADOPAGO_AUTENTICACAO
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pagamento.feign.ml.auth
+            - name: FEIGN_MERCADOPAGO_PEDIDO
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pagamento.url-ml-pedido
+            - name: FEIGN_FIAPEATS_MSPEDIDO
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pagamento.url-ms-pedido
+            - name: URL_NOTIFICACAO
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pagamento.url-notification
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+          readinessProbe:
+            httpGet:
+              path: /mspagamento/actuator/health
+              port: 8080
+            initialDelaySeconds: 105
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /mspagamento/actuator/health
+              port: 8080
+            initialDelaySeconds: 105
+            periodSeconds: 10
+      restartPolicy: Always
