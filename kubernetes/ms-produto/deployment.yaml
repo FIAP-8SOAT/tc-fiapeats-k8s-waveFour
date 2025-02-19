@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-produto-deployment
+  namespace: fiapeats-hk
+  labels:
+    app: ms-produto
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-produto
+  template:
+    metadata:
+      labels:
+        app: ms-produto
+    spec:
+      containers:
+        - name: ms-produto-container
+          image: dilanclima/ms-produto:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATASOURCE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-produto.username
+            - name: DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-produto.url
+            - name: DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: ms-produto.password
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /msproduto/actuator/health
+              port: 8080
+            initialDelaySeconds: 105
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /msproduto/actuator/health
+              port: 8080
+            initialDelaySeconds: 105
+            periodSeconds: 10
+      restartPolicy: Always

@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap
+  namespace: fiapeats-hk
+  labels:
+    name: configmap
+data:
+  ms-pedido.host: "host.docker.internal"
+  ms-pedido.port: "27017"
+  ms-pedido.database: "fiapeats"
+  ms-pedido.username: "admin"
+  ms-pedido.authentication-database: "admin"
+  ms-pedido.url-base: "http://api-container:8079/fiapeats"
+  ms-pedido.url-ms-cliente: "http://ms-cliente-cluster:8080/mscliente"
+  ms-pedido.url-ms-produto: "http://ms-produto-cluster:8080/msproduto"
+  ms-pedido.url-ms-pagamento: "http://ms-pagamento-cluster:8080/mspagamento"
+
+  ms-produto.url: "jdbc:postgresql://host.docker.internal:5433/fiapeatsdb"
+  ms-produto.username: "sa"
+
+  ms-cliente.url: "jdbc:postgresql://host.docker.internal:5434/fiapeatsdb"
+  ms-cliente.username: "sa"
+
+  ms-pagamento.feign.ml.auth: "https://api.mercadopago.com/oauth/token"
+  ms-pagamento.url-ms-pedido: "https://503f-45-173-179-9.ngrok-free.app/mspedido"
+  ms-pagamento.url-ml-pedido: "https://api.mercadopago.com"
+  ms-pagamento.url-notification: "https://3503-45-173-179-9.ngrok-free.app/mspagamento/pagamento/notificacao"

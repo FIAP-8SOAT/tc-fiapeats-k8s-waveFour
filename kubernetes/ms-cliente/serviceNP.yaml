@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-cliente-nodeport
+  namespace: fiapeats-hk
+spec:
+  selector:
+    app: ms-cliente
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30081
+  type: NodePort

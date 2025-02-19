@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: fiapeats-hk
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /mspedido
+            pathType: Prefix
+            backend:
+              service:
+                name: ms-pedido-nodeport
+                port:
+                  number: 8080
+          - path: /mscliente
+            pathType: Prefix
+            backend:
+              service:
+                name: ms-cliente-nodeport
+                port:
+                  number: 8080
+          - path: /msproduto
+            pathType: Prefix
+            backend:
+              service:
+                name: ms-produto-nodeport
+                port:
+                  number: 8080
+          - path: /mspagamento
+            pathType: Prefix
+            backend:
+              service:
+                name: ms-pagamento-nodeport
+                port:
+                  number: 8080
