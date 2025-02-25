@@ -6,7 +6,7 @@ metadata:
   labels:
     name: configmap
 data:
-  ms-pedido.host: "host.docker.internal"
+  ms-pedido.host: "fiapeats-mspedido-mongodb.cluster-c7euge2mwe2b.us-east-1.docdb.amazonaws.com"
   ms-pedido.port: "27017"
   ms-pedido.database: "fiapeats"
   ms-pedido.username: "admin"
@@ -16,13 +16,13 @@ data:
   ms-pedido.url-ms-produto: "http://ms-produto-cluster:8080/msproduto"
   ms-pedido.url-ms-pagamento: "http://ms-pagamento-cluster:8080/mspagamento"
 
-  ms-produto.url: "jdbc:postgresql://host.docker.internal:5433/fiapeatsdb"
+  ms-produto.url: "jdbc:postgresql://fiapeatsprodutodb.c7euge2mwe2b.us-east-1.rds.amazonaws.com:5432/fiapeatsprodutodb"
   ms-produto.username: "sa"
 
-  ms-cliente.url: "jdbc:postgresql://host.docker.internal:5434/fiapeatsdb"
+  ms-cliente.url: "jdbc:postgresql://fiapeatsclientedb.c7euge2mwe2b.us-east-1.rds.amazonaws.com:5432/fiapeatsclientedb"
   ms-cliente.username: "sa"
 
   ms-pagamento.feign.ml.auth: "https://api.mercadopago.com/oauth/token"
-  ms-pagamento.url-ms-pedido: "https://503f-45-173-179-9.ngrok-free.app/mspedido"
+  ms-pagamento.url-ms-pedido: "https://ms-pedido-cluster:8080/mspedido"
   ms-pagamento.url-ml-pedido: "https://api.mercadopago.com"
   ms-pagamento.url-notification: "https://3503-45-173-179-9.ngrok-free.app/mspagamento/pagamento/notificacao"

@@ -5,7 +5,7 @@ metadata:
   namespace: fiapeats-hk
 spec:
   selector:
-    app: ms-produto
+    app: ms-cliente
   ports:
     - protocol: TCP
       port: 8080

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ms-pedido-container
-          image: dilanclima/ms-pedido:latest
+          image: dilanclima/ms-pedido:1.0.0
           ports:
             - containerPort: 8080
           env:
